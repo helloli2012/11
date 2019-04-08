@@ -1,0 +1,66 @@
+g++ 2.cpp -o 2.out
+./2.out
+![fork 循环结果](https://dn-simplecloud.shiyanlou.com/9100001554651694776-wm)
+![运行程序  分析结果](https://dn-simplecloud.shiyanlou.com/9100001554653473646-wm)
+git clone https://github.com/helloli2012/11
+#include "unistd.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "iostream"
+using namespace std;
+int main()
+{
+pid_t val;
+cout<<"PID before fork():"<<(int)getpid()<<endl;
+cout<<val<<endl;
+ cout<<fork()<<endl;
+if (val==fork())
+cout<<"child process PID: "<<(int)getpid()<<endl;
+else
+cout<<"parent process PID: "<<(int)getpid()<<endl;
+return 0;
+}
+
+
+#include "unistd.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "iostream"
+using namespace std;
+int main()
+{ pid_t pid;   
+  pid = fork();     
+  if(pid<0)    
+{    cout<<"Failure to create process!"<<endl;    exit(1);  }
+  else if(pid==0)       
+   cout<<"the pid of child process is "<<getpid()<<endl;
+  else          
+    cout<<"the pid of parent process is "<<getpid()<<endl; 
+ return 0;
+}
+
+请独立分析为什么会有这样的结果。
+
+#include "unistd.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "iostream"
+using namespace std;
+int main(void) 
+{ 
+   int i=0; 
+   cout<<"i   son/pa   ppid    pid    fpid"<<endl; 
+   //ppid is the parent process pid of the current process 
+   //pid is the current process pid 
+   //fpid is the return value of the current process
+   for(i=0;i<2;i++){ 
+       pid_t fpid=fork(); 
+       if(fpid==0) 
+            cout<<i<<"    " <<"son   "<<getppid()<<"    "<<getpid()<<"    "  <<fpid<<"    " <<endl; 
+       else 
+             cout<<i<<"    " <<"pa   "<<getppid()<<"    "<<getpid()<<"    "  <<fpid<<"    " <<endl; 
+   } 
+   return 0; 
+} 
+
+
